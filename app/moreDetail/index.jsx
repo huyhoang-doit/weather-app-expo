@@ -4,6 +4,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -18,6 +19,7 @@ const MoreDetail = () => {
   const dataWeather = JSON.parse(weatherData);
   const [forecastData, setForecastData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -26,13 +28,21 @@ const MoreDetail = () => {
 
   const fetchForecastData = async () => {
     try {
+      setError(null);
       const data = await weatherAPI.getForecast(city);
       const dailyData = data.list
         .filter((item, index) => index % 8 === 0)
         .slice(0, 5);
       setForecastData(dailyData);
     } catch (error) {
-      console.error("Error:", error);
+      setError(error.message);
+      Alert.alert(
+        "Error",
+        error.message === "City not found"
+          ? `Could not find forecast data for "${city}"`
+          : error.message,
+        [{ text: "OK" }]
+      );
     } finally {
       setLoading(false);
     }

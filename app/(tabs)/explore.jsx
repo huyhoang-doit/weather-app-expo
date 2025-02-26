@@ -5,12 +5,14 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import Colors from "../../constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
+import { weatherAPI } from "../../src/apis/weatherAPI";
 
 const Explore = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,17 +23,38 @@ const Explore = () => {
     "Paris, France",
     "Sydney, Australia",
   ]);
+  const [isSearching, setIsSearching] = useState(false);
 
   const router = useRouter();
 
-  const handleSearch = (value) => {
-    setSearchQuery("");
-    router.push({
-      pathname: "/(tabs)/home",
-      params: {
-        location: value,
-      },
-    });
+  const handleSearch = async (value) => {
+    if (!value.trim()) {
+      Alert.alert("Error", "Please enter a city name");
+      return;
+    }
+
+    setIsSearching(true);
+    try {
+      // Verify the city exists before navigating
+      await weatherAPI.getCurrentWeather(value);
+      setSearchQuery("");
+      router.push({
+        pathname: "/(tabs)/home",
+        params: {
+          location: value,
+        },
+      });
+    } catch (error) {
+      Alert.alert(
+        "Error",
+        error.message === "City not found"
+          ? `Could not find "${value}". Please check the city name and try again.`
+          : error.message,
+        [{ text: "OK" }]
+      );
+    } finally {
+      setIsSearching(false);
+    }
   };
 
   return (
@@ -39,17 +62,23 @@ const Explore = () => {
       <Text style={styles.title}>Explore</Text>
 
       <View style={styles.searchContainer}>
-        <TouchableOpacity onPress={() => handleSearch(searchQuery)}>
-          <Ionicons name="search" size={24} color={Colors.GRAY} />
+        <TouchableOpacity
+          onPress={() => handleSearch(searchQuery)}
+          disabled={isSearching}
+        >
+          <Ionicons
+            name={isSearching ? "hourglass" : "search"}
+            size={24}
+            color={Colors.GRAY}
+          />
         </TouchableOpacity>
         <TextInput
           style={styles.searchInput}
           placeholder="Search for a city..."
           placeholderTextColor={Colors.GRAY}
           value={searchQuery}
-          onChangeText={(value) => {
-            setSearchQuery(value);
-          }}
+          onChangeText={setSearchQuery}
+          editable={!isSearching}
         />
       </View>
 

@@ -8,9 +8,20 @@ export const weatherAPI = {
         `${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`
       );
       const data = await response.json();
+
+      // Check if the API returned an error
+      if (data.cod !== 200) {
+        throw new Error(data.message || 'City not found');
+      }
+
       return data;
     } catch (error) {
-      console.error("Error fetching current weather:", error);
+      if (!navigator.onLine) {
+        throw new Error('No internet connection');
+      }
+      if (error.message === 'Failed to fetch') {
+        throw new Error('Unable to connect to weather service');
+      }
       throw error;
     }
   },
@@ -21,9 +32,20 @@ export const weatherAPI = {
         `${BASE_URL}/forecast?q=${city}&appid=${API_KEY}&units=metric`
       );
       const data = await response.json();
+
+      // Check if the API returned an error
+      if (data.cod !== '200') {
+        throw new Error(data.message || 'City not found');
+      }
+
       return data;
     } catch (error) {
-      console.error("Error fetching forecast:", error);
+      if (!navigator.onLine) {
+        throw new Error('No internet connection');
+      }
+      if (error.message === 'Failed to fetch') {
+        throw new Error('Unable to connect to weather service');
+      }
       throw error;
     }
   },

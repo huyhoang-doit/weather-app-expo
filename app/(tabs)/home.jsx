@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import React, { useState, useEffect } from "react";
 import Colors from "../../constants/Colors";
 import Header from "../../src/components/home/Header";
@@ -13,6 +13,7 @@ const Home = () => {
   const [curenLocation, setCurrenLocation] = useState("Ho Chi Minh City");
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { location } = useLocalSearchParams();
   console.log("🚀 ~ Home ~ location:", location);
 
@@ -41,10 +42,19 @@ const Home = () => {
 
   const fetchWeatherData = async () => {
     try {
+      setError(null);
+      setLoading(true);
       const data = await weatherAPI.getCurrentWeather(curenLocation);
       setWeatherData(data);
     } catch (error) {
-      console.error("Error:", error);
+      setError(error.message);
+      Alert.alert(
+        "Error",
+        error.message === "City not found"
+          ? `Could not find weather data for "${curenLocation}"`
+          : error.message,
+        [{ text: "OK" }]
+      );
     } finally {
       setLoading(false);
     }
