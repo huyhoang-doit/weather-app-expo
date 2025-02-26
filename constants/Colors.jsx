@@ -1,0 +1,16 @@
+export default {
+  NIGHT: ["#08244f", "#134CB5", "#0b42ab"],
+  DAY: ["#0075ff", "#ecf0f1", "#fff"],
+  WHITE: "#fff",
+  PRIMARY: "#0075ff",
+  GRAY: "#858585",
+  BG_GRAY: "#f2f2f2",
+  BLACK: "#000",
+  GREEN: "#24b351",
+  LIGHT_GREEN: "#dbffdd",
+  RED: "#f51c0c",
+  YELLOW: "#f1c40f",
+  LIGHT_RED: "#ffc8c4",
+  fontFamily: "outfit",
+  ORANGE: "#f39c12",
+};
