@@ -1,5 +1,5 @@
-const API_KEY = "1c74b553eeedfd71338c5ddbc364e5ca";
-const BASE_URL = "https://api.openweathermap.org/data/2.5";
+const API_KEY = process.env.API_KEY;
+const BASE_URL = process.env.BASE_URL;
 
 export const weatherAPI = {
   getCurrentWeather: async (city) => {
@@ -27,4 +27,4 @@ export const weatherAPI = {
       throw error;
     }
   },
-}; 
+};
