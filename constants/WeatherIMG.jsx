@@ -1,13 +1,35 @@
 export const weatherImages = {
-  Sunny: require("../assets/images/Sun.png"),
-  Windy: require("../assets/images/Wind.png"),
-  Cloud: require("../assets/images/Day-cloud.png"),
-  Rain: require("../assets/images/Rain.png"),
-  Thunder: require("../assets/images/Thunder.png"),
-  Clear: require("../assets/images/Sun.png"),
-  N_clear: require("../assets/images/moon.png"),
-  N_cloud: require("../assets/images/moon-cloud.png"),
-  N_rain: require("../assets/images/moon-rain.png"),
-  N_thunder: require("../assets/images/moon-thunder.png"),
-  N_wind: require("../assets/images/moon-wind.png"),
+  Sunny: {
+    uri: "https://res.cloudinary.com/dqpe1pisz/image/upload/v1740585412/Sun_lyzcwy.png",
+  },
+  Windy: {
+    uri: "https://res.cloudinary.com/dqpe1pisz/image/upload/v1740585413/Wind_svyd8o.png",
+  },
+  Cloud: {
+    uri: "https://res.cloudinary.com/dqpe1pisz/image/upload/v1740585411/Day-cloud_s2fxj1.png",
+  },
+  Rain: {
+    uri: "https://res.cloudinary.com/dqpe1pisz/image/upload/v1740585412/Rain_slzpat.png",
+  },
+  Thunder: {
+    uri: "https://res.cloudinary.com/dqpe1pisz/image/upload/v1740585413/Thunder_su4bc8.png",
+  },
+  Clear: {
+    uri: "https://res.cloudinary.com/dqpe1pisz/image/upload/v1740585412/Sun_lyzcwy.png",
+  },
+  N_clear: {
+    uri: "https://res.cloudinary.com/dqpe1pisz/image/upload/v1740585412/moon_opfhiq.png",
+  },
+  N_cloud: {
+    uri: "https://res.cloudinary.com/dqpe1pisz/image/upload/v1740585416/moon-cloud_niwdkr.png",
+  },
+  N_rain: {
+    uri: "https://res.cloudinary.com/dqpe1pisz/image/upload/v1740585412/Rain_slzpat.png",
+  },
+  N_thunder: {
+    uri: "https://res.cloudinary.com/dqpe1pisz/image/upload/v1740585411/moon-thunder_rjxff3.png",
+  },
+  N_wind: {
+    uri: "https://res.cloudinary.com/dqpe1pisz/image/upload/v1740585413/moon-wind_arycax.png",
+  },
 };
